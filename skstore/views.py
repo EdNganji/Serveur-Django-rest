@@ -3,8 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from skstore.models import Brand, Item
-from skstore.serializers import BrandSerializer, ItemSerializer
+from skstore.models import Brand, Item, Stock
+from skstore.serializers import BrandSerializer, ItemSerializer, StockSerializer
 
 
 class ItemViewSet(ReadOnlyModelViewSet):
@@ -20,4 +20,11 @@ class BrandViewSet(ReadOnlyModelViewSet):
     
     def get_queryset(self):
         return Brand.objects.all()
+    
+class StockViewSet(ReadOnlyModelViewSet):
+    
+    serializer_class = StockSerializer
+    
+    def get_queryset(self):
+        return Stock.objects.all()
 

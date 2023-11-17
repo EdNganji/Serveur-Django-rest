@@ -16,13 +16,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls.static import static
+from django.conf import settings
 
-from skstore.views import BrandViewSet, ItemViewSet
+from skstore.views import BrandViewSet, ItemViewSet, StockViewSet
 
 router = routers.SimpleRouter()
-router.register('Brand', BrandViewSet, basename='Brand')
-router.register('Item', ItemViewSet, basename='Item')
+router.register('Brand', BrandViewSet, basename='brand')
+router.register('Item', ItemViewSet, basename='item')
+router.register('Stock', StockViewSet, basename='stock')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("api-auth/", include("rest_framework.urls")),
+    path("api/", include(router.urls))
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
